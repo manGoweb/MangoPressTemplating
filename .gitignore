@@ -1,0 +1,8 @@
+[Tt]humbs.db
+[Dd]esktop.ini
+*.DS_store
+.DS_store?
+._*
+.Trashes
+
+/vendor/
