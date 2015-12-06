@@ -6,3 +6,4 @@
 .Trashes
 
 /vendor/
+/composer.lock
