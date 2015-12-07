@@ -117,3 +117,11 @@ MangoFilters::$set['wp_thumbnail'] = function($id, $size = 'thumbnail') {
 MangoFilters::$set['wp_esc'] = function($str) {
 	return html_entity_decode($str);
 };
+
+
+function nbsp($str) {
+	$str = trim($str);
+	return Nette\Utils\Strings::replace($str, '~[ ]~', "\xc2\xa0");
+}
+
+MangoFilters::$set['nbsp'] = 'nbsp';
