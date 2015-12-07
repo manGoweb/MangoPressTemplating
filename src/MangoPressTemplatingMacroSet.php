@@ -30,7 +30,6 @@ class MangoPressTemplatingMacroSet extends MacroSet {
 		$args = array_map('intval', $args);
 		$min = min($args);
 		$max = max($args);
-		;
 
 		return $writer->write('@$_repeats[]=$_repeat; foreach(range(1, rand('.$min.', '.$max.')) as $_repeat){');
 	}
