@@ -27,7 +27,8 @@ function renderLatte($path, $parameters = array()) {
 		'assetsUrl' => toPath(WP_HOME) . '/assets',
 		'assetsPath' => toRelativePath(WP_HOME) . '/assets',
 		'wp_query' => $wp_query,
-		'post' => $post
+		'post' => $post,
+		'flashes' => getFlashSession()->flash ?: []
 	);
 
 	foreach($View as $key => $val) {
