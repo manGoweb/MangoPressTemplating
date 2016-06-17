@@ -4,6 +4,7 @@
 .DS_store?
 ._*
 .Trashes
+.idea/
 
 /vendor/
 /composer.lock
