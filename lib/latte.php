@@ -50,7 +50,15 @@ function renderLatte($path, $parameters = array()) {
 	return $latte->render($path, (array) $fullParameters);
 }
 
-function view($view, $parameters = array()) {
+function view($view = NULL, $parameters = NULL) {
+	if(is_array($view) && !$parameters) {
+		$parameters = $view;
+		$view = NULL;
+	}
+	if(!$view) {
+		$bt =  debug_backtrace();
+		$view = basename($bt[0]['file'], '.php');
+	}
 	$path = THEME_VIEWS_DIR . "/$view.latte";
 	return renderLatte($path, $parameters);
 }
