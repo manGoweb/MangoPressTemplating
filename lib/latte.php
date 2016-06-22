@@ -55,6 +55,7 @@ function view($view = NULL, $parameters = NULL) {
 		$parameters = $view;
 		$view = NULL;
 	}
+	$parameters = (array)$parameters;
 	if(!$view) {
 		$bt =  debug_backtrace();
 		$view = basename($bt[0]['file'], '.php');
