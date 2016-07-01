@@ -118,6 +118,18 @@ MangoFilters::$set['wp_esc'] = function($str) {
 	return html_entity_decode($str);
 };
 
+MangoFilters::$set['number'] = function($number, $decimal = 2) {
+	if(fmod($number, 1) == 0) {
+		$decimal = 0;
+	}
+	$sep = '.';
+	$formatted = number_format($number, $decimal, $sep, ",");
+	if($decimal) {
+		$formatted = Strings::replace($formatted, '~\.?0$~');
+	}
+
+	return $formatted;
+};
 
 function nbsp($str) {
 	$str = trim($str);
