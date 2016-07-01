@@ -11,9 +11,9 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "latte/latte": "^2.3",
-        "nette/utils": "^2.3",
-        "nette/http": "^2.3"
+        "latte/latte": "^2.4",
+        "nette/utils": "^2.4",
+        "nette/http": "^2.4"
     },
     "autoload": {
         "classmap": ["src"]
