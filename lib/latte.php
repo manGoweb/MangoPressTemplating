@@ -19,13 +19,14 @@ function renderLatte($path, $parameters = array()) {
 	global $wp_query;
 	global $post;
 
+	$assetsDirname = !empty($App->parameters['assetsDirname']) ? trim($App->parameters['assetsDirname'], '/') : 'assets';
 
 	$fullParameters = array(
 		'App' => $App,
 		'baseUrl' => toPath(WP_HOME),
 		'basePath' => toRelativePath(WP_HOME),
-		'assetsUrl' => toPath(WP_HOME) . '/assets',
-		'assetsPath' => toRelativePath(WP_HOME) . '/assets',
+		'assetsUrl' => toPath(WP_HOME) . '/' . $assetsDirname,
+		'assetsPath' => toRelativePath(WP_HOME) . '/' . $assetsDirname,
 		'wp_query' => $wp_query,
 		'post' => $post,
 		'flashes' => getFlashSession()->flash ?: []
