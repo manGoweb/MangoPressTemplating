@@ -29,11 +29,13 @@ function renderLatte($path, $parameters = array()) {
 		'assetsPath' => toRelativePath(WP_HOME) . '/' . $assetsDirname,
 		'wp_query' => $wp_query,
 		'post' => $post,
-		'flashes' => getFlashSession()->flash ?: []
+		'flashes' => getFlashSession() ?: []
 	);
 
-	foreach($View as $key => $val) {
-		$fullParameters[$key] = $val;
+	if(isset($View)) {
+		foreach($View as $key => $val) {
+			$fullParameters[$key] = $val;
+		}
 	}
 
 	foreach($parameters as $key => $val) {
