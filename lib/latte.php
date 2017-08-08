@@ -43,6 +43,9 @@ function renderLatte($path, $parameters = array()) {
 	}
 
 	$latte = new Latte\Engine;
+	$components = new \Mangoweb\LatteComponents\Engine($latte->getParser());
+	$components->registerComponent(new \Mangoweb\LatteComponents\ComponentDefinition('alpha', 'componentsDir/alpha.latte'));
+	$latte->setLoader(new \Mangoweb\LatteComponents\Bridges\NetteLatte\FileLoader($components));
 	$latte->setTempDirectory(TEMP_DIR . '/cache/latte');
 
 	MangoPressTemplatingMacroSet::install($latte->getCompiler());
