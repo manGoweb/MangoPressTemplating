@@ -19,18 +19,30 @@ function getFlashSession() {
 	global $App;
 
 	if(!isset($App)) {
-		return [];
+		return NULL;
 	}
 
 	$param = getFlashParam();
 	$section = $App->getService('session')->getSection('Nette.Application.Flash/' . $param);
-  $section->setExpiration('+5 seconds');
+	$section->setExpiration('+5 seconds');
+
+	if(!$section->flash) {
+		$section->flash = [];
+	}
 
 	return $section;
 }
 
+function getFlashMessages() {
+	return getFlashSession()->flash;
+}
+
 function flashMessage($message, $type = FLASH_INFO) {
 	$session = getFlashSession();
+
+	if(!$session) {
+		throw new \Exception('Flash session not initialized.');
+	}
 
 	$messages = $session->flash;
 	$messages[] = (object) [
