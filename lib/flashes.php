@@ -24,8 +24,9 @@ function getFlashSession() {
 
 	$param = getFlashParam();
 	$section = $App->getService('session')->getSection('Nette.Application.Flash/' . $param);
-	$section->setExpiration('+5 seconds');
-	return $section ? $section->flash : [];
+  $section->setExpiration('+5 seconds');
+
+	return $section;
 }
 
 function flashMessage($message, $type = FLASH_INFO) {
