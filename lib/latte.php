@@ -64,6 +64,7 @@ function view($view = NULL, $parameters = NULL) {
 		$view = basename($bt[0]['file'], '.php');
 	}
 	$path = THEME_VIEWS_DIR . "/$view.latte";
+	do_action('pre_render_view');
 	return renderLatte($path, $parameters);
 }
 
