@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=7.0",
         "latte/latte": "^2.4",
         "nette/utils": "^2.4",
         "nette/http": "^2.4"
