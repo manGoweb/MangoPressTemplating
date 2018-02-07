@@ -104,14 +104,14 @@ MangoFilters::$set['wp_image'] = function($id, $size = 'thumbnail') {
 	$post = lazy_post($id);
 	if(!$post) return $id;
 
-	return wp_get_attachment_image_src($post->ID, $size)[0];
+	return wp_get_attachment_image_src($post->ID, $size)[0] ?? '';
 };
 
 MangoFilters::$set['wp_thumbnail'] = function($id, $size = 'thumbnail') {
 	$post = lazy_post($id);
 	if(!$post) return $id;
 
-	return wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), $size)[0];
+	return wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), $size)[0] ?? '';
 };
 
 MangoFilters::$set['wp_esc'] = function($str) {
