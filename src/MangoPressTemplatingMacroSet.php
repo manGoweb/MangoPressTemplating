@@ -14,10 +14,10 @@ class MangoPressTemplatingMacroSet extends MacroSet {
 	public static function install(Latte\Compiler $compiler) {
 		$me = new static($compiler);
 
-		$me->addMacro('loop', array($me, 'macroLoop'), array($me, 'macroLoopEnd'));
-		$me->addMacro('each', '', array($me, 'macroEachEnd'));
-		$me->addMacro('repeat', array($me, 'macroRepeat'), array($me, 'macroRepeatEnd'));
-		$me->addMacro('set', array($me, 'macroSet'));
+		$me->addMacro('loop', [$me, 'macroLoop'], [$me, 'macroLoopEnd']);
+		$me->addMacro('each', '', [$me, 'macroEachEnd']);
+		$me->addMacro('repeat', [$me, 'macroRepeat'], [$me, 'macroRepeatEnd']);
+		$me->addMacro('set', [$me, 'macroSet']);
 	}
 
 	public function macroLoop(MacroNode $node, PhpWriter $writer) {

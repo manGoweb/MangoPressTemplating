@@ -8,7 +8,7 @@ function safe($content) {
 
 MangoFilters::$set['url'] = 'rawurlencode';
 
-foreach (array('normalize', 'toAscii', 'webalize', 'padLeft', 'padRight', 'reverse') as $name) {
+foreach (['normalize', 'toAscii', 'webalize', 'padLeft', 'padRight', 'reverse'] as $name) {
 	MangoFilters::$set[$name] = 'Nette\Utils\Strings::' . $name;
 }
 
