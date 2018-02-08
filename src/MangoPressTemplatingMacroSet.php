@@ -8,6 +8,8 @@ use Nette\Utils\Strings;
 
 class MangoPressTemplatingMacroSet extends MacroSet {
 
+	public static $set = [];
+
 	public static $defaultEachVarName = 'Post';
 	public static $defaultEachArrayName = '$GLOBALS["wp_query"]';
 
@@ -18,6 +20,10 @@ class MangoPressTemplatingMacroSet extends MacroSet {
 		$me->addMacro('each', '', [$me, 'macroEachEnd']);
 		$me->addMacro('repeat', [$me, 'macroRepeat'], [$me, 'macroRepeatEnd']);
 		$me->addMacro('set', [$me, 'macroSet']);
+
+		foreach (self::$set as $name => $macro) {
+			$me->addMacro($name, ...$macro);
+		}
 	}
 
 	public function macroLoop(MacroNode $node, PhpWriter $writer) {
@@ -84,3 +90,6 @@ class MangoPressTemplatingMacroSet extends MacroSet {
 	}
 
 }
+
+// alias
+class MangoMacros extends MangoPressTemplatingMacroSet {}
