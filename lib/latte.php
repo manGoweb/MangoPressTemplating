@@ -13,7 +13,7 @@ function toRelativePath($url) {
 	return rtrim($urlscript->getPath(), '/');
 }
 
-function renderLatte($path, $parameters = array()) {
+function renderLatte($path, $parameters = []) {
 	global $App;
 	global $View;
 	global $wp_query;
@@ -21,7 +21,7 @@ function renderLatte($path, $parameters = array()) {
 
 	$assetsDirname = !empty($App->parameters['assetsDirname']) ? trim($App->parameters['assetsDirname'], '/') : 'assets';
 
-	$fullParameters = array(
+	$fullParameters = [
 		'App' => $App,
 		'baseUrl' => toPath(WP_HOME),
 		'basePath' => toRelativePath(WP_HOME),
@@ -29,8 +29,8 @@ function renderLatte($path, $parameters = array()) {
 		'assetsPath' => toRelativePath(WP_HOME) . '/' . $assetsDirname,
 		'wp_query' => $wp_query,
 		'post' => $post,
-		'flashes' => getFlashMessages()
-	);
+		'flashes' => getFlashMessages(),
+	];
 
 	if(isset($View)) {
 		foreach($View as $key => $val) {
@@ -68,12 +68,12 @@ function view($view = NULL, $parameters = NULL) {
 	return renderLatte($path, $parameters);
 }
 
-function viewString($view, $parameters = array()) {
+function viewString($view, $parameters = []) {
 	$path = THEME_VIEWS_DIR . "/$view.latte";
 	return renderLatteToString($path, $parameters);
 }
 
-function renderLatteToString($path, $parameters = array()) {
+function renderLatteToString($path, $parameters = []) {
 	ob_start();
 	renderLatte($path, $parameters);
 	$str = ob_get_contents();
