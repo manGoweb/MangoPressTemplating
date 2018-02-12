@@ -50,6 +50,8 @@ function renderLatte($path, $parameters = []) {
 
 	MangoPressTemplatingFilterSet::install($latte);
 
+	MangoPressLatteExtensions::invoke($latte);
+
 	return $latte->render($path, (array) $fullParameters);
 }
 
