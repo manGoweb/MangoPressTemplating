@@ -22,7 +22,11 @@ class MangoPressTemplatingMacroSet extends MacroSet {
 		$me->addMacro('set', [$me, 'macroSet']);
 
 		foreach (self::$set as $name => $macro) {
-			$me->addMacro($name, ...$macro);
+			if(is_callable($macro)) {
+				$me->addMacro($name, $macro);
+			} else {
+				$me->addMacro($name,  ...$macro);
+			}
 		}
 	}
 
