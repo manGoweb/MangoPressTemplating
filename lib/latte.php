@@ -1,7 +1,7 @@
 <?php
 
-require __DIR__ . '/../src/MangoPressTemplatingMacroSet.php';
-require __DIR__ . '/../src/MangoPressTemplatingFilterSet.php';
+require_once __DIR__ . '/../src/MangoPressTemplatingMacroSet.php';
+require_once __DIR__ . '/../src/MangoPressTemplatingFilterSet.php';
 
 function toPath($url) {
 	$urlscript = new Nette\Http\UrlScript($url);
