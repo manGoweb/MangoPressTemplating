@@ -118,6 +118,10 @@ MangoFilters::$set['wp_esc'] = function($str) {
 	return html_entity_decode($str);
 };
 
+MangoFilters::$set['wp_filter'] = function($data, string $filter) {
+	return apply_filters($filter, $data);
+};
+
 MangoFilters::$set['number'] = function($number, $decimal = 2) {
 	if(fmod($number, 1) == 0) {
 		$decimal = 0;
