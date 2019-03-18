@@ -29,7 +29,7 @@ function renderLatte($path, $parameters = []) {
 		'assetsPath' => toRelativePath(WP_HOME) . '/' . $assetsDirname,
 		'wp_query' => $wp_query,
 		'post' => $post,
-		'flashes' => getFlashMessages(),
+		'flashes' => (defined('DISABLE_FLASH_MESSAGES') && DISABLE_FLASH_MESSAGES) ? [] : getFlashMessages(),
 	];
 
 	if(isset($View)) {
