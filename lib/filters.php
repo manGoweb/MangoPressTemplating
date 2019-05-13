@@ -1,9 +1,23 @@
 <?php
 
-use Nette\Utils\Html;
+class SafeHtmlString implements Latte\Runtime\IHtmlString
+{
+	private $value = '';
 
-function safe($content) {
-	return Html::el()->setHtml($content);
+	public function __construct(string $value)
+	{
+		$this->value = $value;
+	}
+
+	public function __toString(): string
+	{
+		return $this->value;
+	}
+}
+
+function safe($content)
+{
+	return new SafeHtmlString($content);
 }
 
 MangoFilters::$set['url'] = 'rawurlencode';
