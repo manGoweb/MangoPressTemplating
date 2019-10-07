@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../src/MangoPressTemplatingMacroSet.php';
 require_once __DIR__ . '/../src/MangoPressTemplatingFilterSet.php';
+require_once __DIR__ . '/../src/MangoPressSnippetBridge.php';
 
 function toPath($url) {
 	$urlscript = new Nette\Http\UrlScript($url);
@@ -13,7 +14,7 @@ function toRelativePath($url) {
 	return rtrim($urlscript->getPath(), '/');
 }
 
-function renderLatte($path, $parameters = []) {
+function renderLatte($path, $parameters = [], $snippetMode = false) {
 	global $App;
 	global $View;
 	global $wp_query;
@@ -45,6 +46,10 @@ function renderLatte($path, $parameters = []) {
 	$latte = new Latte\Engine;
 	$latte->setTempDirectory(TEMP_DIR . '/cache/latte');
 
+	$snippetBridge = new MangoPressSnippetBridge;
+	$snippetBridge->snippetMode = $snippetMode;
+	$latte->addProvider('snippetBridge', $snippetBridge);
+
 	MangoPressTemplatingMacroSet::install($latte->getCompiler());
 	Nette\Bridges\FormsLatte\FormMacros::install($latte->getCompiler());
 
@@ -52,10 +57,16 @@ function renderLatte($path, $parameters = []) {
 
 	MangoPressLatteExtensions::invoke($latte);
 
-	return $latte->render($path, (array) $fullParameters);
+	$output = $latte->render($path, (array) $fullParameters);
+
+	if ($snippetMode) {
+		return $snippetBridge->payload;
+	}
+
+	return $output;
 }
 
-function view($view = NULL, $parameters = NULL) {
+function sanitizeViewParams($view = null, $parameters = null) {
 	if(is_array($view) && !$parameters) {
 		$parameters = $view;
 		$view = NULL;
@@ -63,22 +74,37 @@ function view($view = NULL, $parameters = NULL) {
 	$parameters = (array)$parameters;
 	if(!$view) {
 		$bt =  debug_backtrace();
-		$view = basename($bt[0]['file'], '.php');
+		$view = basename($bt[1]['file'], '.php');
 	}
 	$path = THEME_VIEWS_DIR . "/$view.latte";
+	return [ 'path' => $path, 'parameters' => $parameters ];
+}
+
+function view($view = NULL, $parameters = NULL) {
+	$p = sanitizeViewParams($view, $parameters);
 	do_action('pre_render_view');
-	return renderLatte($path, $parameters);
+	return renderLatte($p['path'], $p['parameters']);
 }
 
-function viewString($view, $parameters = []) {
-	$path = THEME_VIEWS_DIR . "/$view.latte";
-	return renderLatteToString($path, $parameters);
+function viewString($view = null, $parameters = null) {
+	$p = sanitizeViewParams($view, $parameters);
+	do_action('pre_render_view');
+	return renderLatteToString($p['path'], $p['parameters']);
 }
 
-function renderLatteToString($path, $parameters = []) {
+function viewSnippets($view = NULL, $parameters = NULL) {
+	$p = sanitizeViewParams($view, $parameters);
+	do_action('pre_render_view');
+	return renderLatteToString($p['path'], $p['parameters'], true);
+}
+
+function renderLatteToString($path, $parameters = [], $snippetMode = false) {
 	ob_start();
-	renderLatte($path, $parameters);
+	$result = renderLatte($path, $parameters, $snippetMode);
 	$str = ob_get_contents();
 	ob_end_clean();
+	if ($snippetMode) {
+		return $result;
+	}
 	return $str;
 }
