@@ -53,6 +53,9 @@ function renderLatte($path, $parameters = [], $snippetMode = false) {
 	MangoPressTemplatingMacroSet::install($latte->getCompiler());
 	Nette\Bridges\FormsLatte\FormMacros::install($latte->getCompiler());
 
+	$latte->addProvider('cacheStorage', $App->getService('cache.storage'));
+	$latte->getCompiler()->addMacro('cache', new \Nette\Bridges\CacheLatte\CacheMacro($latte->getCompiler()));
+
 	MangoPressTemplatingFilterSet::install($latte);
 
 	MangoPressLatteExtensions::invoke($latte);
