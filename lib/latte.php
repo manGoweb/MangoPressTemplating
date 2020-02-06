@@ -21,13 +21,13 @@ function renderLatte($path, $parameters = [], $snippetMode = false) {
 	global $post;
 
 	$assetsDirname = !empty($App->parameters['assetsDirname']) ? trim($App->parameters['assetsDirname'], '/') : 'assets';
-
+	$home = \get_home_url();
 	$fullParameters = [
 		'App' => $App,
-		'baseUrl' => toPath(WP_HOME),
-		'basePath' => toRelativePath(WP_HOME),
-		'assetsUrl' => toPath(WP_HOME) . '/' . $assetsDirname,
-		'assetsPath' => toRelativePath(WP_HOME) . '/' . $assetsDirname,
+		'baseUrl' => toPath($home),
+		'basePath' => toRelativePath($home),
+		'assetsUrl' => toPath($home) . '/' . $assetsDirname,
+		'assetsPath' => toRelativePath($home) . '/' . $assetsDirname,
 		'wp_query' => $wp_query,
 		'post' => $post,
 		'flashes' => (defined('DISABLE_FLASH_MESSAGES') && DISABLE_FLASH_MESSAGES) ? [] : getFlashMessages(),
